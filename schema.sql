@@ -1,7 +1,9 @@
-DROP TABLE IF EXISTS animals;
-DROP TABLE IF EXISTS owners;
-DROP TABLE IF EXISTS species;
-DROP TABLE IF EXISTS vets;
+DROP TABLE IF EXISTS owners CASCADE;
+DROP TABLE IF EXISTS species CASCADE;
+DROP TABLE IF EXISTS vets CASCADE;
+DROP TABLE IF EXISTS animals CASCADE;
+DROP TABLE IF EXISTS specializations;
+DROP TABLE IF EXISTS visits;
 
 CREATE TABLE owners (
   id INT GENERATED ALWAYS AS IDENTITY,
@@ -45,6 +47,7 @@ CREATE TABLE animals (
 );
 
 CREATE TABLE specializations(
+  id INT GENERATED ALWAYS AS IDENTITY,
   specie_id INT NOT NULL,
   vet_id INT NOT NULL,
   CONSTRAINT fk_species
@@ -55,12 +58,14 @@ CREATE TABLE specializations(
     FOREIGN KEY(vet_id)
       REFERENCES vets(id)
         ON DELETE CASCADE,
-  PRIMARY KEY(specie_id, vet_id)
-)
+  PRIMARY KEY(id)
+);
 
 CREATE TABLE visits(
+  id INT GENERATED ALWAYS AS IDENTITY,
   animal_id INT NOT NULL,
   vet_id INT NOT NULL,
+  date_of_visit date NOT NULL,
   CONSTRAINT fk_animals
     FOREIGN KEY(animal_id)
       REFERENCES animals(id)
@@ -69,6 +74,5 @@ CREATE TABLE visits(
     FOREIGN KEY(vet_id)
       REFERENCES vets(id)
         ON DELETE CASCADE,
-  PRIMARY KEY(animal_id, vet_id)
+  PRIMARY KEY(id)
 );
-
