@@ -30,12 +30,14 @@ VALUES ('Agumon', '20200203', 0, true, 10.23 ),
 
 BEGIN;
 UPDATE animals
-SET species_id = (SELECT sp.id FROM species sp WHERE sp.name LIKE '%mon');
+SET species_id = 2
+WHERE animals.name LIKE '%mon';
 COMMIT;
 
 BEGIN;
 UPDATE animals
-SET species_id = (SELECT sp.id FROM species sp WHERE sp.name NOT LIKE '%mon');
+SET species_id = 1
+WHERE animals.name NOT LIKE '%mon';
 COMMIT;
 
 BEGIN;
@@ -194,3 +196,4 @@ INSERT INTO visits(animal_id, vet_id, date_of_visit) VALUES
   (SELECT id from vets WHERE name = 'Maisy Smith'),
   '20210111'
 );
+COMMIT;
